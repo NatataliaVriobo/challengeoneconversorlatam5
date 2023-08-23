@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        .container {
+            margin: 20px auto;
+            max-width: 400px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f8f8f8;
+        }
+
+        label, textarea, input, button {
+            display: block;
+            margin: 10px 0;
+        }
+
+        textarea, input {
+            width: 100%;
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+
+        button {
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+    <title>Encriptador de Texto</title>
+</head>
+<body>
+    <h1>Encriptador de Texto</h1>
+    <div class="container">
+        <label for="inputText">Texto a Encriptar:</label>
+        <textarea id="inputText"></textarea>
+        <label for="shift">Desplazamiento:</label>
+        <input type="number" id="shift" min="1" value="1">
+        <button onclick="encryptText()">Encriptar</button>
+        <label for="outputText">Texto Encriptado:</label>
+        <textarea id="outputText" readonly></textarea>
+    </div>
+    <script>
+        function encryptText() {
+            const inputText = document.getElementById("inputText").value;
+            const shift = parseInt(document.getElementById("shift").value);
+            const outputText = document.getElementById("outputText");
+
+            let encryptedText = "";
+
+            for (let i = 0; i < inputText.length; i++) {
+                let char = inputText[i];
+                if (char.match(/[a-z]/i)) {
+                    const code = inputText.charCodeAt(i);
+                    if (code >= 65 && code <= 90) {
+                        char = String.fromCharCode(((code - 65 + shift) % 26) + 65);
+                    } else if (code >= 97 && code <= 122) {
+                        char = String.fromCharCode(((code - 97 + shift) % 26) + 97);
+                    }
+                }
+                encryptedText += char;
+            }
+
+            outputText.value = encryptedText;
+        }
+    </script>
+</body>
+</html>
